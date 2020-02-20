@@ -27,10 +27,10 @@ public class XmlProcessorTest {
     private CamelContext context;
 
     @Produce(uri = "direct:routeStart")
-    private ProducerTemplate start;
+    private ProducerTemplate template;
 
     @EndpointInject(uri = "mock:result")
-    private MockEndpoint resultEndpoint;
+    private MockEndpoint mock;
 
     @Before
     public void setupRoute() throws Exception {
@@ -47,16 +47,10 @@ public class XmlProcessorTest {
 
     @Test
     public void xmlShouldBeUnmarshalToObject() throws InterruptedException {
-        resultEndpoint.expectedMessageCount(1);
+        mock.expectedBodiesReceived(new PurchaseOrder("Camel in Action", 6999.0, 1.0));
 
+        template.sendBody("<purchaseOrder name=\"Camel in Action\" price=\"6999\" amount=\"1\"/>");
 
-        start.sendBody("<purchaseOrder name=\"Camel in Action\" price=\"6999\" amount=\"1\"/>");
-        resultEndpoint.assertIsSatisfied();
-        final PurchaseOrder actualResult = resultEndpoint.getExchanges().get(0).getIn().getBody(PurchaseOrder.class);
-
-
-        assertThat(actualResult.getName(), is("Camel in Action"));
-        assertThat(actualResult.getPrice(), is(6999.0));
-        assertThat(actualResult.getAmount(), is(1.0));
+        mock.assertIsSatisfied();
     }
 }
