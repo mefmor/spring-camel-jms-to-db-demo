@@ -15,13 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
-@DirtiesContext
 @RunWith(CamelSpringBootRunner.class)
 @SpringBootTest
-public class XmlProcessorTest {
+public class TransformXmlToObjectTest {
 
     @Autowired
     private CamelContext context;
@@ -46,11 +43,28 @@ public class XmlProcessorTest {
     }
 
     @Test
-    public void xmlShouldBeUnmarshalToObject() throws InterruptedException {
+    @DirtiesContext
+    public void xmlWithFullSetOfParametersWillBeSuccessfullyConverted() throws InterruptedException {
         mock.expectedBodiesReceived(new PurchaseOrder("Camel in Action", 6999.0, 1.0));
 
         template.sendBody("<purchaseOrder name=\"Camel in Action\" price=\"6999\" amount=\"1\"/>");
 
         mock.assertIsSatisfied();
+    }
+
+    @Test
+    @DirtiesContext
+    public void xmlWithPartialSetParametersSuccessfullyConvertedWithDefaultFieldValues() throws InterruptedException {
+        mock.expectedBodiesReceived(PurchaseOrder.builder().name("Camel in Action").build());
+
+        template.sendBody("<purchaseOrder name=\"Camel in Action\"/>");
+
+        mock.assertIsSatisfied();
+    }
+
+    @Test(expected=org.apache.camel.CamelExecutionException.class)
+    @DirtiesContext
+    public void incorrectXmlWillThrownException() {
+        template.sendBody("Incorrect XML");
     }
 }

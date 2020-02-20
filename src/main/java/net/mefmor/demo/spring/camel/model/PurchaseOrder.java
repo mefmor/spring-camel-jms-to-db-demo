@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PurchaseOrder {
