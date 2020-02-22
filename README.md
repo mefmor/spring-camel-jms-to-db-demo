@@ -2,6 +2,9 @@
 This is a demo of using Apache Camel in Spring Boot to create an integration that extracts an XML message from 
 a JMS queue, converts it into an object and places it in the database.
 
+## Directory layout
+The project has [Standard Maven Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html).
+
 ## Build from Source
 
 ### Before You Start
@@ -24,5 +27,7 @@ To compile, test, and build all jars, distribution zips, and docs use:
 ./mvn build
 ```
 
-## Directory layout
-The project has [Standard Maven Directory Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html).
+## Source Code Style
+The wiki pages [Code Style](https://github.com/spring-projects/spring-framework/wiki/Code-Style) 
+and [IntelliJ IDEA Editor Settings](https://github.com/spring-projects/spring-framework/wiki/IntelliJ-IDEA-Editor-Settings) 
+define the source file coding standards we use along with some IDEA editor settings we customize.
