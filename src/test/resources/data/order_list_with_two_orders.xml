@@ -1,0 +1,6 @@
+<Orders>
+    <List>
+        <PurchaseOrder name="Clean code" price="9666" amount="2"/>
+        <PurchaseOrder name="Camel in Action" price="6999" amount="1"/>
+    </List>
+</Orders>
