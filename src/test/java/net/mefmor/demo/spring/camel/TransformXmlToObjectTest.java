@@ -67,7 +67,7 @@ public class TransformXmlToObjectTest {
     public void xmlWithPartialSetParametersSuccessfullyConvertedWithDefaultFieldValues() throws InterruptedException {
         mock.expectedBodiesReceived(PurchaseOrder.builder().name("Camel in Action").build());
 
-        template.sendBody("<purchaseOrder name=\"Camel in Action\"/>");
+        template.sendBody("<PurchaseOrder name=\"Camel in Action\"/>");
 
         mock.assertIsSatisfied();
     }

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@XmlRootElement
+@XmlRootElement(name = "PurchaseOrder")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PurchaseOrder {
     @XmlAttribute
