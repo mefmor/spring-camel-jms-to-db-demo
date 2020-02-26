@@ -18,6 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 @RunWith(CamelSpringBootRunner.class)
 @SpringBootTest
+@DirtiesContext
 public class TransformXmlToObjectTest {
 
     @Autowired
