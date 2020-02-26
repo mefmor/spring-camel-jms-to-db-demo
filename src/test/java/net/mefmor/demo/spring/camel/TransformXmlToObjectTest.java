@@ -14,13 +14,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.util.StreamUtils;
+import org.springframework.util.FileCopyUtils;
 
-import java.nio.charset.Charset;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 
@@ -37,12 +35,6 @@ public class TransformXmlToObjectTest {
 
     @EndpointInject(uri = "mock:result")
     private MockEndpoint mock;
-
-    @Value("classpath:data/single_purchase_order.xml")
-    private Resource singlePurchaseOrder;
-
-    @Value("classpath:data/order_list_with_two_orders.xml")
-    private Resource orderListWithTwoOrders;
 
     @Before
     public void setupRoute() throws Exception {
@@ -62,7 +54,7 @@ public class TransformXmlToObjectTest {
     public void xmlWithFullSetOfParametersWillBeSuccessfullyConverted() throws InterruptedException {
         mock.expectedBodiesReceived(new PurchaseOrder("Camel in Action", 6999.0, 1.0));
 
-        template.sendBody(asString(singlePurchaseOrder));
+        template.sendBody(asString("/data/single_purchase_order.xml"));
 
         mock.assertIsSatisfied();
     }
@@ -84,7 +76,7 @@ public class TransformXmlToObjectTest {
                 new PurchaseOrder("Clean code", 9666.0, 2.0),
                 new PurchaseOrder("Camel in Action", 6999.0, 1.0))));
 
-        template.sendBody(asString(orderListWithTwoOrders));
+        template.sendBody(asString("/data/order_list_with_two_orders.xml"));
 
         mock.assertIsSatisfied();
     }
@@ -96,8 +88,8 @@ public class TransformXmlToObjectTest {
     }
 
     @SneakyThrows
-    private String asString(Resource resource) {
-        return StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
+    private String asString(String pathToResource) {
+        return FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream(pathToResource)));
     }
 
 }
