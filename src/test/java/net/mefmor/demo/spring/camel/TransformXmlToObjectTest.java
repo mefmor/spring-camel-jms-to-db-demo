@@ -1,5 +1,6 @@
 package net.mefmor.demo.spring.camel;
 
+import lombok.SneakyThrows;
 import net.mefmor.demo.spring.camel.model.PurchaseOrder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.EndpointInject;
@@ -12,8 +13,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.util.StreamUtils;
+
+import java.nio.charset.Charset;
 
 
 @RunWith(CamelSpringBootRunner.class)
@@ -29,6 +35,9 @@ public class TransformXmlToObjectTest {
 
     @EndpointInject(uri = "mock:result")
     private MockEndpoint mock;
+
+    @Value("classpath:data/single_purchase_order.xml")
+    private Resource singlePurchaseOrder;
 
     @Before
     public void setupRoute() throws Exception {
@@ -48,7 +57,7 @@ public class TransformXmlToObjectTest {
     public void xmlWithFullSetOfParametersWillBeSuccessfullyConverted() throws InterruptedException {
         mock.expectedBodiesReceived(new PurchaseOrder("Camel in Action", 6999.0, 1.0));
 
-        template.sendBody("<purchaseOrder name=\"Camel in Action\" price=\"6999\" amount=\"1\"/>");
+        template.sendBody(asString(singlePurchaseOrder));
 
         mock.assertIsSatisfied();
     }
@@ -63,9 +72,15 @@ public class TransformXmlToObjectTest {
         mock.assertIsSatisfied();
     }
 
-    @Test(expected=org.apache.camel.CamelExecutionException.class)
+    @Test(expected = org.apache.camel.CamelExecutionException.class)
     @DirtiesContext
     public void incorrectXmlWillThrownException() {
         template.sendBody("Incorrect XML");
     }
+
+    @SneakyThrows
+    private String asString(Resource resource) {
+        return StreamUtils.copyToString(resource.getInputStream(), Charset.defaultCharset());
+    }
+
 }
