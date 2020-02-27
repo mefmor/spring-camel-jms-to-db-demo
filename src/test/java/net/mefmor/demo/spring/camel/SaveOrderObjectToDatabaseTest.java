@@ -27,7 +27,7 @@ import static org.junit.Assert.assertThat;
 @Sql(scripts = "/hsqldb/init.sql")
 @SqlConfig(separator = "/;")
 @DirtiesContext
-public class SpringCamelJmsToDbDemoApplicationTest {
+public class SaveOrderObjectToDatabaseTest {
 
     @Autowired
     private CamelContext context;
