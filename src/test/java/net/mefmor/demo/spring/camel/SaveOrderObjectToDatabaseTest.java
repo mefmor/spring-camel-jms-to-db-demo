@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 
@@ -32,7 +33,7 @@ public class SaveOrderObjectToDatabaseTest {
     @Autowired
     private CamelContext context;
 
-    @Produce(uri = "direct:routeStart")
+    @Produce(uri = "{{incoming.from.uri}}")
     private ProducerTemplate template;
 
     @Autowired
@@ -44,7 +45,7 @@ public class SaveOrderObjectToDatabaseTest {
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:routeStart").to("mybatis:insertTrade?statementType=Insert");
+                from("{{incoming.from.uri}}").to("{{outgoing.to.database.uri}}");
             }
         });
     }

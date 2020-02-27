@@ -30,7 +30,7 @@ public class TransformXmlToObjectTest {
     @Autowired
     private CamelContext context;
 
-    @Produce(uri = "direct:routeStart")
+    @Produce(uri = "{{incoming.from.uri}}")
     private ProducerTemplate template;
 
     @EndpointInject(uri = "mock:result")
@@ -42,7 +42,7 @@ public class TransformXmlToObjectTest {
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:routeStart")
+                from("{{incoming.from.uri}}")
                         .unmarshal().jaxb("net.mefmor.demo.spring.camel.model")
                         .to("mock:result");
             }

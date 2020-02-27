@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:hsqldb:mem:testDB;check_props=true;shutdown=true;sql.syntax_ora=true
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    username: sa
+    password:
