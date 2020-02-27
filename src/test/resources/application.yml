@@ -1,2 +1,2 @@
-incoming.from.uri: direct:routeStart
+incoming.from.uri: direct:start
 outgoing.to.database.uri: mybatis:insertTrade?statementType=Insert
