@@ -18,7 +18,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.mefmor.demo.spring.camel.DataUtils.asString;
+import static net.mefmor.demo.spring.camel.DataUtils.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -43,15 +43,13 @@ public class XmlToDatabaseTest {
         final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(PurchaseOrder.class));
 
         assertThat(outputOrders.size(), is(1));
-        assertThat(outputOrders.get(0), is(new PurchaseOrder("Camel in Action", 6999.0, 1.0)));
+        assertThat(outputOrders.get(0), equalTo(bookWithFullSetOfParameters()));
     }
 
     @Test
     @DirtiesContext
     public void purchaseOrdersFromXmlShouldBeSavedToDatabase() {
-        final List<PurchaseOrder> expectedOrders =
-                Arrays.asList(new PurchaseOrder("Clean code", 9666.0, 2.0),
-                new PurchaseOrder("Camel in Action", 6999.0, 1.0));
+        final List<PurchaseOrder> expectedOrders = Arrays.asList(bookWithPartialParameters(), bookWithFullSetOfParameters());
 
         template.sendBody(asString("/data/order_list_with_two_orders.xml"));
         final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(PurchaseOrder.class));

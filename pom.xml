@@ -18,7 +18,8 @@
     <properties>
         <java.version>1.8</java.version>
         <camel.version>2.24.0</camel.version>
-        <mybatis-spring-boot-starter-version>2.1.0</mybatis-spring-boot-starter-version>
+        <mybatis.spring.boot.starter.version>2.1.0</mybatis.spring.boot.starter.version>
+        <org.eclipse.persistence.version>2.7.5</org.eclipse.persistence.version>
     </properties>
 
     <dependencies>
@@ -27,15 +28,20 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
-        <!-- mybatis -->
+        <!-- Database mapping -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring-boot-starter-version}</version>
+            <version>${mybatis.spring.boot.starter.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -54,12 +60,21 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!-- camel -->
         <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-spring-boot-starter</artifactId>
-            <version>${camel.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+
+        <!-- XML Processing -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.core</artifactId>
+            <version>${org.eclipse.persistence.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.moxy</artifactId>
+            <version>${org.eclipse.persistence.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -67,7 +82,7 @@
             <version>${camel.version}</version>
         </dependency>
 
-        <!-- test -->
+        <!-- Unit Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -88,11 +103,6 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

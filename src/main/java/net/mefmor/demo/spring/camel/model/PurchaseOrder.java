@@ -10,6 +10,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.eclipse.persistence.oxm.annotations.XmlPath;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,8 +21,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class PurchaseOrder {
     @XmlAttribute
     private String name;
+
     @XmlAttribute
     private double price;
+
     @XmlAttribute
     private double amount;
+
+    @XmlPath("info/@author")
+    private String author;
+
 }

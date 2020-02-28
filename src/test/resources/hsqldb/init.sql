@@ -7,5 +7,6 @@ CREATE TABLE customers (
    name VARCHAR (45),
    price DOUBLE,
    amount DOUBLE,
+   author VARCHAR (90),
    PRIMARY KEY (ID)
 );

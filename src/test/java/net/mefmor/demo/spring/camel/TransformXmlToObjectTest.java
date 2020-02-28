@@ -18,7 +18,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.Arrays;
 
-import static net.mefmor.demo.spring.camel.DataUtils.asString;
+import static net.mefmor.demo.spring.camel.DataUtils.*;
 
 
 @RunWith(CamelSpringBootRunner.class)
@@ -51,7 +51,7 @@ public class TransformXmlToObjectTest {
     @Test
     @DirtiesContext
     public void xmlWithFullSetOfParametersWillBeSuccessfullyConverted() throws InterruptedException {
-        mock.expectedBodiesReceived(new PurchaseOrder("Camel in Action", 6999.0, 1.0));
+        mock.expectedBodiesReceived(bookWithFullSetOfParameters());
 
         template.sendBody(asString("/data/single_purchase_order.xml"));
 
@@ -72,8 +72,8 @@ public class TransformXmlToObjectTest {
     @DirtiesContext
     public void xmlWithOrdersSuccessfullyConverted() throws InterruptedException {
         mock.expectedBodiesReceived(new Orders(Arrays.asList(
-                new PurchaseOrder("Clean code", 9666.0, 2.0),
-                new PurchaseOrder("Camel in Action", 6999.0, 1.0))));
+                bookWithPartialParameters(),
+                bookWithFullSetOfParameters())));
 
         template.sendBody(asString("/data/order_list_with_two_orders.xml"));
 

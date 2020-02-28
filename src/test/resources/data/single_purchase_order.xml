@@ -1,1 +1,3 @@
-<PurchaseOrder name="Camel in Action" price="6999" amount="1"/>
+<PurchaseOrder name="Camel in Action" price="6999" amount="1">
+    <info author="Claus Ibsen, Jonathan Anstey" />
+</PurchaseOrder>

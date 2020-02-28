@@ -19,6 +19,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 
 import java.util.List;
 
+import static net.mefmor.demo.spring.camel.DataUtils.bookWithFullSetOfParameters;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -52,7 +53,7 @@ public class SaveOrderObjectToDatabaseTest {
     @Test
     @DirtiesContext
     public void purchaseOrderInstanceShouldBeSavedInDatabase() {
-        PurchaseOrder incomingObject = new PurchaseOrder("Camel in Action", 6999.0, 1.0);
+        PurchaseOrder incomingObject = bookWithFullSetOfParameters();
 
         template.sendBody(incomingObject);
         final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(PurchaseOrder.class));
