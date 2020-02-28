@@ -9,6 +9,7 @@ public class FromJmsToDbRoute extends RouteBuilder {
     public void configure() throws Exception {
         from("{{incoming.from.uri}}")
                 .unmarshal().jaxb("net.mefmor.demo.spring.camel.model")
+                .split().simple("${body.orderList}")
                 .to("{{outgoing.to.database.uri}}");
     }
 }
