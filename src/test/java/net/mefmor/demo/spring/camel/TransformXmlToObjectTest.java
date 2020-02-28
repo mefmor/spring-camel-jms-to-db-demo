@@ -1,6 +1,5 @@
 package net.mefmor.demo.spring.camel;
 
-import lombok.SneakyThrows;
 import net.mefmor.demo.spring.camel.model.Orders;
 import net.mefmor.demo.spring.camel.model.PurchaseOrder;
 import org.apache.camel.CamelContext;
@@ -16,10 +15,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.util.FileCopyUtils;
 
-import java.io.InputStreamReader;
 import java.util.Arrays;
+
+import static net.mefmor.demo.spring.camel.DataUtils.asString;
 
 
 @RunWith(CamelSpringBootRunner.class)
@@ -85,11 +84,6 @@ public class TransformXmlToObjectTest {
     @DirtiesContext
     public void incorrectXmlWillThrownException() {
         template.sendBody("Incorrect XML");
-    }
-
-    @SneakyThrows
-    private String asString(String pathToResource) {
-        return FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream(pathToResource)));
     }
 
 }

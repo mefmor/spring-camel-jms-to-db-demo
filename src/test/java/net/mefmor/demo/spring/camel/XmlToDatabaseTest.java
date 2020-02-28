@@ -1,6 +1,5 @@
 package net.mefmor.demo.spring.camel;
 
-import lombok.SneakyThrows;
 import net.mefmor.demo.spring.camel.model.PurchaseOrder;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -15,12 +14,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.util.FileCopyUtils;
 
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import static net.mefmor.demo.spring.camel.DataUtils.asString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -61,8 +59,4 @@ public class XmlToDatabaseTest {
         assertThat(outputOrders, equalTo(expectedOrders));
     }
 
-    @SneakyThrows
-    private String asString(String pathToResource) {
-        return FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream(pathToResource)));
-    }
 }
