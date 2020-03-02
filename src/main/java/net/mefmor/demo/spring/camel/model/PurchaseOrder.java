@@ -28,7 +28,7 @@ public class PurchaseOrder {
     @XmlAttribute
     private double amount;
 
-    @XmlPath("info/@author")
+    @XmlPath("info[@type='author']/@value")
     private String author;
 
 }
