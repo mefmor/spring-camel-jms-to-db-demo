@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PurchaseOrderMapper {
-    @Insert("INSERT INTO customers(name, price, amount, author) VALUES (#{name,jdbcType=VARCHAR}, "
-            + "#{price,jdbcType=DOUBLE}, #{amount,jdbcType=DOUBLE}, #{author,jdbcType=VARCHAR})")
+    @Insert("INSERT INTO customers(name, price, amount, author, isbn) VALUES (#{name,jdbcType=VARCHAR}, "
+            + "#{price,jdbcType=DOUBLE}, #{amount,jdbcType=DOUBLE}, #{author,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR})")
     void insertTrade(PurchaseOrder purchaseOrder);
 }

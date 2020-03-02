@@ -1,3 +1,5 @@
 <PurchaseOrder name="Camel in Action" price="6999" amount="1">
+    <info type="isbn" key="10" value="0-13-235088-2" />
+    <info type="isbn" key="13" value="978-0-13-235088-4" />
     <info type="author" value="Claus Ibsen, Jonathan Anstey" />
 </PurchaseOrder>

@@ -31,4 +31,7 @@ public class PurchaseOrder {
     @XmlPath("info[@type='author']/@value")
     private String author;
 
+    @XmlPath("info[@type='ISBN'][@key='13']/@value")
+    private String isbn;
+
 }

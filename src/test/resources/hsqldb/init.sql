@@ -8,5 +8,6 @@ CREATE TABLE customers (
    price DOUBLE,
    amount DOUBLE,
    author VARCHAR (90),
+   isbn VARCHAR (45),
    PRIMARY KEY (ID)
 );
