@@ -13,7 +13,7 @@ class DataUtils {
     }
 
     static PurchaseOrder bookWithFullSetOfParameters() {
-        return new PurchaseOrder("Camel in Action", 6999.0, 1.0, "Claus Ibsen, Jonathan Anstey", "978-0-13-235088-4");
+        return new PurchaseOrder("Camel in Action", 6999.0, 1.0, "Claus Ibsen, Jonathan Anstey", "978-0-13-235088-4", null);
     }
 
     static PurchaseOrder bookWithPartialParameters() {

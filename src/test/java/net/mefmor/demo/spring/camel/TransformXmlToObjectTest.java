@@ -70,6 +70,16 @@ public class TransformXmlToObjectTest {
 
     @Test
     @DirtiesContext
+    public void extractPartOfValue() throws InterruptedException {
+        mock.expectedBodiesReceived(PurchaseOrder.builder().genre("S").build());
+
+        template.sendBody("<PurchaseOrder other=\"ASAAA\"/>");
+
+        mock.assertIsSatisfied();
+    }
+
+    @Test
+    @DirtiesContext
     public void xmlWithOrdersSuccessfullyConverted() throws InterruptedException {
         mock.expectedBodiesReceived(new Orders(Arrays.asList(
                 bookWithPartialParameters(),
