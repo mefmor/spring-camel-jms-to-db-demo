@@ -37,7 +37,6 @@ public class TransformXmlToObjectTest {
 
     @Before
     public void setupRoute() throws Exception {
-
         context.addRoutes(new RouteBuilder() {
             @Override
             public void configure() throws Exception {
@@ -51,42 +50,35 @@ public class TransformXmlToObjectTest {
     @Test
     @DirtiesContext
     public void xmlWithFullSetOfParametersWillBeSuccessfullyConverted() throws InterruptedException {
-        mock.expectedBodiesReceived(bookWithFullSetOfParameters());
-
-        template.sendBody(asString("/data/single_purchase_order.xml"));
-
-        mock.assertIsSatisfied();
+        testRoute(asString("/data/single_purchase_order.xml"),
+                bookWithFullSetOfParameters());
     }
 
     @Test
     @DirtiesContext
-    public void xmlWithPartialSetParametersSuccessfullyConvertedWithDefaultFieldValues() throws InterruptedException {
-        mock.expectedBodiesReceived(PurchaseOrder.builder().name("Camel in Action").build());
-
-        template.sendBody("<PurchaseOrder name=\"Camel in Action\"/>");
-
-        mock.assertIsSatisfied();
+    public void xmlWithPartialSetParametersSuccessfullyConvertedWithDefaultFieldValues() throws InterruptedException {testRoute("<PurchaseOrder name=\"Camel in Action\"/>",
+                PurchaseOrder.builder().name("Camel in Action").build());
     }
 
     @Test
     @DirtiesContext
     public void extractPartOfValue() throws InterruptedException {
-        mock.expectedBodiesReceived(PurchaseOrder.builder().genre("S").build());
-
-        template.sendBody("<PurchaseOrder other=\"ASAAA\"/>");
-
-        mock.assertIsSatisfied();
+        testRoute("<PurchaseOrder other=\"ASAAA\"/>",
+                PurchaseOrder.builder().genre("S").build());
     }
 
     @Test
     @DirtiesContext
     public void xmlWithOrdersSuccessfullyConverted() throws InterruptedException {
-        mock.expectedBodiesReceived(new Orders(Arrays.asList(
-                bookWithPartialParameters(),
-                bookWithFullSetOfParameters())));
+        testRoute(asString("/data/order_list_with_two_orders.xml"),
+                new Orders(Arrays.asList(
+                        bookWithPartialParameters(),
+                        bookWithFullSetOfParameters())));
+    }
 
-        template.sendBody(asString("/data/order_list_with_two_orders.xml"));
-
+    private void testRoute(String inputXml, Object expectedObject) throws InterruptedException {
+        mock.expectedBodiesReceived(expectedObject);
+        template.sendBody(inputXml);
         mock.assertIsSatisfied();
     }
 
