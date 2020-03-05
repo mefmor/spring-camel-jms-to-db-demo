@@ -52,7 +52,7 @@ public class XmlToDatabaseTest {
         final List<PurchaseOrder> expectedOrders = Arrays.asList(bookWithPartialParameters(), bookWithFullSetOfParameters());
 
         template.sendBody(asString("/data/order_list_with_two_orders.xml"));
-        final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(PurchaseOrder.class));
+        final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", new DataUtils.PurchaseOrderMapper());
 
         assertThat(outputOrders, equalTo(expectedOrders));
     }

@@ -62,9 +62,9 @@ public class TransformXmlToObjectTest {
 
     @Test
     @DirtiesContext
-    public void extractPartOfValue() throws InterruptedException {
-        testRoute("<PurchaseOrder other=\"ASAAA\"/>",
-                PurchaseOrder.builder().genre("S").build());
+    public void extractPart() throws InterruptedException {
+        testRoute("<PurchaseOrder other=\"ASZZA\"/>",
+                PurchaseOrder.builder().other(new PurchaseOrder.Other("S", "ZZ")).build());
     }
 
     @Test

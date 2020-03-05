@@ -9,5 +9,7 @@ CREATE TABLE customers (
    amount DOUBLE,
    author VARCHAR (90),
    isbn VARCHAR (45),
+   genre VARCHAR (1),
+   content_rate VARCHAR (2),
    PRIMARY KEY (ID)
 );

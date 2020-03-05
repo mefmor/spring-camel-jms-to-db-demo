@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.jdbc.Sql;
@@ -56,7 +55,7 @@ public class SaveOrderObjectToDatabaseTest {
         PurchaseOrder incomingObject = bookWithFullSetOfParameters();
 
         template.sendBody(incomingObject);
-        final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", BeanPropertyRowMapper.newInstance(PurchaseOrder.class));
+        final List<PurchaseOrder> outputOrders = jdbcTemplate.query("select * from customers", new DataUtils.PurchaseOrderMapper());
 
         assertThat(outputOrders.size(), is(1));
         assertThat(outputOrders.get(0), is(incomingObject));

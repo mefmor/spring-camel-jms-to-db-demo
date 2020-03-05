@@ -38,18 +38,27 @@ public class PurchaseOrder {
 
 
     @XmlAttribute(name = "other")
-    @XmlJavaTypeAdapter(GenreAdapter.class)
-    private String genre;
+    @XmlJavaTypeAdapter(OtherAdapter.class)
+    private Other other;
 
-    private static class GenreAdapter extends XmlAdapter<String, String> {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class Other {
+        private String genre;
+        private String contentRate;
+    }
+
+    private static class OtherAdapter extends XmlAdapter<String, Other> {
         @Override
-        public String unmarshal(String v) {
-            return v.substring(1, 2);
+        public Other unmarshal(String v) {
+            return Other.builder().genre(v.substring(1, 2)).contentRate(v.substring(2, 4)).build();
         }
 
         @Override
-        public String marshal(String v) {
-            throw new NotImplementedException();
+        public String marshal(Other v) {
+            return "A" + v.getGenre();
         }
     }
 }
